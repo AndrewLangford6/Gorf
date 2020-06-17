@@ -33,6 +33,42 @@ namespace Gorf
                 x = x + 5;
             }
 
+            if (direction == "up")
+            {
+                y = y - 8;
+            }
+
+            if (direction == "down")
+            {
+                y = y + 5;
+            }
+
+        }
+        public void Passive()
+        {
+            y = y + GameScreen.jumpSpeed;
+            GameScreen.jumpSpeed++;
+            if (GameScreen.jumpSpeed > 30)
+            {
+                GameScreen.jumpSpeed = 30;
+            }
+        }
+
+        public void Jump()
+        {
+            if(GameScreen.gravityCounter == 2)
+            {
+                GameScreen.gravity++;
+            }
+            
+
+            if (GameScreen.gravity > 0)
+            {
+                GameScreen.jumpSpeed++;
+
+            }
+
+            y = y + GameScreen.gravity;
         }
 
 
