@@ -27,11 +27,13 @@ namespace Gorf
 
         List<Minion> mList = new List<Minion>();
 
-        public static int gravity, gravityCounter;
+        public static int gravity, gravityCounter, iFrames, hp;
         public static int jumpSpeed;
 
-        bool facingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hp, hpL;
+        int heroX = ((720 / 2) - 12);
+
+        bool facingR, mIsFacingR;
+        int pShootingCounter, pH, pW, hpX, hpY, hpL;
         
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
@@ -43,7 +45,7 @@ namespace Gorf
 
         public void OnStart()
         {
-            hero = new Gorf(((this.Width / 2) - 12), 100, 24, 36);
+            hero = new Gorf(heroX, 100, 24, 36);
 
             ground = new Floor(0, 380, 720, 70);
 
@@ -75,7 +77,9 @@ namespace Gorf
         public void gameLoop_Tick(object sender, EventArgs e)
         {
             //hero movement
+            Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
             gravityCounter++;
+            iFrames++;
             hpL = hp;
             hpX = hero.x - 6;
             hpY = hero.y - 12;
@@ -90,47 +94,12 @@ namespace Gorf
 
             if (leftArrowDown)
             {
-                ground.Move("left");
-
-                //minions
-                foreach (Minion m in mList)
-                {
-                    m.Move("left");
-                }
-
-                //right bullets
-                foreach (Bullet bullet in bR.AsEnumerable().Reverse())
-                {
-                    bullet.Move("left");
-                }
-                //left bullets
-                foreach (Bullet bullet in bL.AsEnumerable().Reverse())
-                {
-                    bullet.Move("left");
-                }
+                Moving("right");
             }
 
             if (rightArrowDown)
             {
-                ground.Move("right");
-
-
-                //minions
-                foreach (Minion m in mList)
-                {
-                    m.Move("right");
-                }
-
-                //right bullets
-                foreach (Bullet bullet in bR.AsEnumerable().Reverse())
-                {
-                    bullet.Move("right");
-                }
-                //left bullets
-                foreach (Bullet bullet in bL.AsEnumerable().Reverse())
-                {
-                    bullet.Move("right");
-                }
+                Moving("left");
             }
 
             if (sDown)
@@ -154,17 +123,21 @@ namespace Gorf
             //minions
             foreach (Minion m in mList)
             {
-                if(m.x + m.sizeX < hero.x)
+                Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
+
+                if (m.x + m.sizeX < hero.x + 1)
                 {
                     m.Chase("right");
+                    mIsFacingR = true;
                 }
-                else if (m.x > hero.x + hero.sizeX)
+                else if (m.x > hero.x + hero.sizeX - 1)
                 {
                     m.Chase("left");
+                    mIsFacingR = false;
                 }
                 else
                 {
-
+                    mIsFacingR = mIsFacingR;
                 }
             }
             //collisions
@@ -181,10 +154,32 @@ namespace Gorf
                 }
             }
 
-            //bullet 
+            //minion
+            foreach (Minion m in mList)
+            {
+                Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
 
-            //bullet hits ground
-            foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
+                if (minionRect.IntersectsWith(gorf) && iFrames >= 20)
+                {
+                    hero.Hurt();
+                    if (mIsFacingR)
+                    {
+                        Moving("left");
+                    }
+                    else
+                    {
+
+                        Moving("right");
+                    }
+                    
+                    iFrames = 0;
+                }
+            }
+
+                //bullet 
+
+                //bullet hits ground
+                foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
             {
                 Rectangle bGround = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
                 Rectangle groundB = new Rectangle(ground.x, ground.y, ground.sizeX, ground.sizeY);
@@ -351,7 +346,54 @@ namespace Gorf
             }
         }
 
+        private void Moving(string direction)
+        {
+            if(direction == "right")
+            {
+                ground.Move("left");
 
+                //minions
+                foreach (Minion m in mList)
+                {
+                    m.Move("left");
+                }
+
+                //right bullets
+                foreach (Bullet bullet in bR.AsEnumerable().Reverse())
+                {
+                    bullet.Move("left");
+                }
+                //left bullets
+                foreach (Bullet bullet in bL.AsEnumerable().Reverse())
+                {
+                    bullet.Move("left");
+                }
+            }
+
+            if(direction == "left")
+            {
+                ground.Move("right");
+
+
+                //minions
+                foreach (Minion m in mList)
+                {
+                    m.Move("right");
+                }
+
+                //right bullets
+                foreach (Bullet bullet in bR.AsEnumerable().Reverse())
+                {
+                    bullet.Move("right");
+                }
+                //left bullets
+                foreach (Bullet bullet in bL.AsEnumerable().Reverse())
+                {
+                    bullet.Move("right");
+                }
+            }
+            
+        }
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             //player 1 button presses

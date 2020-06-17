@@ -71,6 +71,11 @@ namespace Gorf
             y = y + GameScreen.gravity;
         }
 
+        public void Hurt()
+        {
+            GameScreen.hp = GameScreen.hp - 2;
+        }
+
 
 
     }
