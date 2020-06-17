@@ -15,6 +15,7 @@ namespace Gorf
         //used to draw boxes on screen
         SolidBrush whiteBrush = new SolidBrush(Color.White);
         SolidBrush BrownBrush = new SolidBrush(Color.Brown);
+        SolidBrush greenBrush = new SolidBrush(Color.Green);
 
         Gorf hero;
         Floor ground;
@@ -24,11 +25,14 @@ namespace Gorf
         List<Bullet> bUp = new List<Bullet>();
         List<Bullet> bDown = new List<Bullet>();
 
+        List<Minion> mList = new List<Minion>();
+
         public static int gravity, gravityCounter;
         public static int jumpSpeed;
 
         bool facingR;
-        int pShootingCounter, pH, pW;
+        int pShootingCounter, pH, pW, hpX, hpY, hp, hpL;
+        
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
         public GameScreen()
@@ -42,6 +46,11 @@ namespace Gorf
             hero = new Gorf(((this.Width / 2) - 12), 100, 24, 36);
 
             ground = new Floor(0, 380, 720, 70);
+
+            Minion test = new Minion(10, 380 - 36, 24, 36);
+            mList.Add(test);
+
+            hp = 34;
 
             jumpSpeed = 0;
             gravity = -18;
@@ -60,10 +69,19 @@ namespace Gorf
 
         }
 
-        private void gameLoop_Tick(object sender, EventArgs e)
+     
+        
+
+        public void gameLoop_Tick(object sender, EventArgs e)
         {
             //hero movement
             gravityCounter++;
+            hpL = hp;
+            hpX = hero.x - 6;
+            hpY = hero.y - 12;
+
+            
+
             if (gravityCounter >= 2)
             {
                 gravityCounter = 0;
@@ -73,6 +91,12 @@ namespace Gorf
             if (leftArrowDown)
             {
                 ground.Move("left");
+
+                //minions
+                foreach (Minion m in mList)
+                {
+                    m.Move("left");
+                }
 
                 //right bullets
                 foreach (Bullet bullet in bR.AsEnumerable().Reverse())
@@ -89,6 +113,13 @@ namespace Gorf
             if (rightArrowDown)
             {
                 ground.Move("right");
+
+
+                //minions
+                foreach (Minion m in mList)
+                {
+                    m.Move("right");
+                }
 
                 //right bullets
                 foreach (Bullet bullet in bR.AsEnumerable().Reverse())
@@ -120,12 +151,28 @@ namespace Gorf
                 }
             }
 
+            //minions
+            foreach (Minion m in mList)
+            {
+                if(m.x + m.sizeX < hero.x)
+                {
+                    m.Chase("right");
+                }
+                else if (m.x > hero.x + hero.sizeX)
+                {
+                    m.Chase("left");
+                }
+                else
+                {
+
+                }
+            }
             //collisions
 
             //hero
             if (hero.x + hero.sizeX >= ground.x && hero.x <= ground.x + ground.sizeX)
             {
-                if (hero.y > 310 + hero.sizeY)
+                if (hero.y >= 310 + hero.sizeY)
                 {
                     hero.y = 310 + hero.sizeY;
                     sDown = false;
@@ -232,8 +279,22 @@ namespace Gorf
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
+            Rectangle hpP = new Rectangle(hpX + 1, hpY + 1, hpL, 6);
+            Rectangle hpB = new Rectangle(hpX, hpY, 36, 8);
+
+            Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
+
             e.Graphics.FillRectangle(BrownBrush, ground.x, ground.y, ground.sizeX, ground.sizeY);
             e.Graphics.FillRectangle(whiteBrush, hero.x, hero.y, hero.sizeX, hero.sizeY);
+
+            e.Graphics.FillRectangle(whiteBrush, hpB);
+            e.Graphics.FillRectangle(greenBrush, hpP);
+
+            foreach (Minion m in mList)
+            {
+                Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
+                e.Graphics.FillRectangle(BrownBrush, minionRect);
+            }
 
 
             //right bullets
