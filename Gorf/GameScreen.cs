@@ -122,6 +122,7 @@ namespace Gorf
 
             //collisions
 
+            //hero
             if (hero.x + hero.sizeX >= ground.x && hero.x <= ground.x + ground.sizeX)
             {
                 if (hero.y > 310 + hero.sizeY)
@@ -130,6 +131,20 @@ namespace Gorf
                     sDown = false;
                     gravity = -18;
                     jumpSpeed = 0;
+                }
+            }
+
+            //bullet 
+
+            //bullet hits ground
+            foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
+            {
+                Rectangle bGround = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
+                Rectangle groundB = new Rectangle(ground.x, ground.y, ground.sizeX, ground.sizeY);
+
+                if (bGround.IntersectsWith(groundB))
+                {
+                    bDown.Remove(bullet);
                 }
             }
 
@@ -149,12 +164,12 @@ namespace Gorf
             //up bullets
             foreach (Bullet bullet in bUp.AsEnumerable().Reverse())
             {
-                bullet.Move("up");
+                bullet.Shoot("up");
             }
             //down bullets
             foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
             {
-                bullet.Move("down");
+                bullet.Shoot("down");
             }
 
             if (xDown)
@@ -205,11 +220,6 @@ namespace Gorf
                         }
 
                     }
-
-
-
-
-
 
                     pShootingCounter = 0;
                 }
