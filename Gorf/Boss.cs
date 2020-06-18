@@ -12,14 +12,15 @@ namespace Gorf
         Random randGenBoss = new Random();
         int rBoss;
 
-        public int x, y, sizeX, sizeY;
+        public int x, y, sizeX, sizeY, hp;
 
-        public Boss(int _x, int _y, int _sizeX, int _sizeY)
+        public Boss(int _x, int _y, int _sizeX, int _sizeY, int _hp)
         {
             x = _x;
             y = _y;
             sizeX = _sizeX;
             sizeY = _sizeY;
+            hp = _hp;
 
         }
         public void Move(string direction)
@@ -52,11 +53,6 @@ namespace Gorf
             {
                 x = x + 3;
             }
-        }
-
-        public void Laser()
-        {
-
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Gorf
         int heroX = ((720 / 2) - 12);
 
         bool facingR, mIsFacingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3;
+        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5;
 
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
@@ -55,7 +55,7 @@ namespace Gorf
 
             ground = new Floor(0, 380, 720, 70);
 
-            boss = new Boss(Width / 2 - 155, -400, 310, 150);
+            boss = new Boss(Width / 2 - 155, -400, 310, 150, 5000);
 
             hp = 34;
 
@@ -71,8 +71,6 @@ namespace Gorf
             facingR = true;
 
             rando2 = 150;
-
-
         }
 
         private void GameScreen_Load(object sender, EventArgs e)
@@ -82,9 +80,13 @@ namespace Gorf
 
         public void gameLoop_Tick(object sender, EventArgs e)
         {
+            
+            Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
+            Rectangle bossRect = new Rectangle(boss.x, boss.y, boss.sizeX, boss.sizeY);
             //boss
             bossTime++;
             bossTime3++;
+            
             LaserTime++;
             if(boss.y + boss.sizeY <= 179)
             {
@@ -166,11 +168,35 @@ namespace Gorf
 
             if (LaserTime >= 600)
             {
+                bossTime4++;
+                
 
+                if (bossTime4 >= 200)
+                {
+                    
+                    bossTime4 = 0;
+                    LaserTime = 0;
+                }
+                else
+                {
+                    Rectangle laser = new Rectangle(boss.x + 124, boss.y + boss.sizeY - 20, 62, 700);
+
+                    if (laser.IntersectsWith(gorf))
+                    {
+                        bossTime5++;
+
+                        if(bossTime5 >= 10)
+                        {
+                            hero.Hurt();
+                            bossTime5 = 0;
+                        }
+                        
+                    }
+                }
             }
 
             //hero movement
-            Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
+            
             gravityCounter++;
             iFrames++;
             eggTime++;
@@ -371,11 +397,36 @@ namespace Gorf
             foreach (Bullet bullet in bUp.AsEnumerable().Reverse())
             {
                 bullet.Shoot("up");
+                Rectangle b3 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
+
+                if (b3.IntersectsWith(bossRect))
+                {
+                    boss.hp = boss.hp - bulletDamage;
+                }
+
             }
             //down bullets
             foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
             {
                 bullet.Shoot("down");
+                Rectangle b4 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
+                foreach (Minion m in mList.AsEnumerable().Reverse())
+                {
+                    Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
+
+                    if (b4.IntersectsWith(minionRect) && m.mIFrames > 20)
+                    {
+                        m.hp2 = m.hp2 - bulletDamage;
+                        m.Hurt("left");
+                        m.mIFrames = 0;
+                        bDown.Remove(bullet);
+                    }
+                    if (m.hp2 <= 0)
+                    {
+                        mList.Remove(m);
+
+                    }
+                }
             }
 
             if (xDown)
@@ -558,7 +609,23 @@ namespace Gorf
                 Rectangle eggo = new Rectangle(eg.x, eg.y, eg.sizeX, eg.sizeY);
                 e.Graphics.FillRectangle(greenBrush, eggo);
             }
-            e.Graphics.FillRectangle(BrownBrush, bossRect);
+            Rectangle laser = new Rectangle(boss.x + 124, boss.y + boss.sizeY - 20, 62, 700);
+           
+            if(LaserTime >= 600)
+            {
+                e.Graphics.FillRectangle(BrownBrush, laser);
+            }
+            
+            if(boss.hp <= 0)
+            {
+                e.Graphics.FillRectangle(whiteBrush, bossRect);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(BrownBrush, bossRect);
+            }
+            
+
         }
 
         private void Moving(string direction)
