@@ -12,6 +12,9 @@ namespace Gorf
 {
     public partial class GameScreen : UserControl
     {
+        // create a random number generator
+        Random randGen = new Random();
+
         //used to draw boxes on screen
         SolidBrush whiteBrush = new SolidBrush(Color.White);
         SolidBrush BrownBrush = new SolidBrush(Color.Brown);
@@ -27,14 +30,16 @@ namespace Gorf
 
         List<Minion> mList = new List<Minion>();
 
-        public static int gravity, gravityCounter, iFrames, hp;
+        List<Egg> eList = new List<Egg>();
+
+        public static int gravity, gravityCounter, iFrames, hp, mHP;
         public static int jumpSpeed;
 
         int heroX = ((720 / 2) - 12);
 
         bool facingR, mIsFacingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hpL;
-        
+        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando;
+
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
         public GameScreen()
@@ -49,8 +54,10 @@ namespace Gorf
 
             ground = new Floor(0, 380, 720, 70);
 
-            Minion test = new Minion(10, 380 - 36, 24, 36);
+            Minion test = new Minion(10, 380 - 36, 24, 36, 12, 0);
             mList.Add(test);
+
+
 
             hp = 34;
 
@@ -60,19 +67,18 @@ namespace Gorf
 
             pShootingCounter = 0;
             pH = 4;
-            pW = 36;
+            pW = 48;
+            bulletDamage = 4;
 
             facingR = true;
 
 
         }
+
         private void GameScreen_Load(object sender, EventArgs e)
         {
 
         }
-
-     
-        
 
         public void gameLoop_Tick(object sender, EventArgs e)
         {
@@ -80,11 +86,16 @@ namespace Gorf
             Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
             gravityCounter++;
             iFrames++;
+            eggTime++;
+            foreach (Minion m in mList)
+            {
+                m.mIFrames++;
+            }
             hpL = hp;
             hpX = hero.x - 6;
             hpY = hero.y - 12;
 
-            
+
 
             if (gravityCounter >= 2)
             {
@@ -155,9 +166,13 @@ namespace Gorf
             }
 
             //minion
+
+
             foreach (Minion m in mList)
             {
                 Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
+
+
 
                 if (minionRect.IntersectsWith(gorf) && iFrames >= 20)
                 {
@@ -171,15 +186,35 @@ namespace Gorf
 
                         Moving("right");
                     }
-                    
+
                     iFrames = 0;
                 }
             }
 
-                //bullet 
+            //minion and ground
+            foreach (Minion m in mList.AsEnumerable().Reverse())
+            {
 
-                //bullet hits ground
-                foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
+                m.Passive();
+
+                if (m.y > 485)
+                {
+                    mList.Remove(m);
+
+                }
+
+                if (m.x + m.sizeX >= ground.x && m.x <= ground.x + ground.sizeX)
+                {
+                    if (m.y >= 310 + m.sizeY)
+                    {
+                        m.y = 310 + m.sizeY;
+                    }
+                }
+            }
+            //bullet 
+
+            //bullet hits ground
+            foreach (Bullet bullet in bDown.AsEnumerable().Reverse())
             {
                 Rectangle bGround = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
                 Rectangle groundB = new Rectangle(ground.x, ground.y, ground.sizeX, ground.sizeY);
@@ -190,6 +225,7 @@ namespace Gorf
                 }
             }
 
+
             //Bullets
             pShootingCounter++;
 
@@ -197,11 +233,49 @@ namespace Gorf
             foreach (Bullet bullet in bR.AsEnumerable().Reverse())
             {
                 bullet.Shoot("right");
+                Rectangle b1 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
+
+                foreach (Minion m in mList.AsEnumerable().Reverse())
+                {
+                    Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
+
+                    if (b1.IntersectsWith(minionRect) && m.mIFrames > 20)
+                    {
+                        m.hp2 = m.hp2 - bulletDamage;
+                        m.Hurt("right");
+                        m.mIFrames = 0;
+
+                        bR.Remove(bullet);
+                    }
+                    if (m.hp2 <= 0)
+                    {
+                        mList.Remove(m);
+                    }
+                }
             }
             //left bullets
             foreach (Bullet bullet in bL.AsEnumerable().Reverse())
             {
                 bullet.Shoot("left");
+                Rectangle b2 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
+
+                foreach (Minion m in mList.AsEnumerable().Reverse())
+                {
+                    Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
+
+                    if (b2.IntersectsWith(minionRect) && m.mIFrames > 20)
+                    {
+                        m.hp2 = m.hp2 - bulletDamage;
+                        m.Hurt("left");
+                        m.mIFrames = 0;
+                        bL.Remove(bullet);
+                    }
+                    if (m.hp2 <= 0)
+                    {
+                        mList.Remove(m);
+
+                    }
+                }
             }
             //up bullets
             foreach (Bullet bullet in bUp.AsEnumerable().Reverse())
@@ -267,6 +341,41 @@ namespace Gorf
                 }
 
 
+            }
+
+            //egg
+            foreach (Egg p in eList.AsEnumerable().Reverse())
+            {
+                p.Passive();
+
+
+                if (p.x + p.sizeX >= ground.x && p.x <= ground.x + ground.sizeX)
+                {
+                    if (p.y + p.sizeY >= 310 + p.sizeY)
+                    {
+                        p.t++;
+                        p.y = 310;
+
+                        if (p.t > 25)
+                        {
+                            
+                            Minion eggMinion = new Minion(p.x + 12, p.y + 24, 24, 36, 12, 0);
+                            mList.Add(eggMinion);
+
+                            eList.Remove(p);
+                        }
+
+                    }
+                }
+            }
+
+            if (eggTime > 300)
+            {
+                rando = randGen.Next(ground.x, ground.x + ground.sizeX - 48);
+                Egg test2 = new Egg(rando, -100, 48, 72, 0);
+                eList.Add(test2);
+
+                eggTime = 0;
             }
 
             Refresh();
@@ -344,11 +453,17 @@ namespace Gorf
                     bDown.Remove(bullet);
                 }
             }
+            foreach (Egg eg in eList.AsEnumerable().Reverse())
+            {
+                Rectangle eggo = new Rectangle(eg.x, eg.y, eg.sizeX, eg.sizeY);
+                e.Graphics.FillRectangle(greenBrush, eggo);
+            }
+
         }
 
         private void Moving(string direction)
         {
-            if(direction == "right")
+            if (direction == "right")
             {
                 ground.Move("left");
 
@@ -368,9 +483,14 @@ namespace Gorf
                 {
                     bullet.Move("left");
                 }
+
+                foreach (Egg e in eList)
+                {
+                    e.Move("left");
+                }
             }
 
-            if(direction == "left")
+            if (direction == "left")
             {
                 ground.Move("right");
 
@@ -391,8 +511,13 @@ namespace Gorf
                 {
                     bullet.Move("right");
                 }
+
+                foreach (Egg e in eList)
+                {
+                    e.Move("right");
+                }
             }
-            
+
         }
         private void GameScreen_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {

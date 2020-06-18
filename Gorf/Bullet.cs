@@ -12,6 +12,7 @@ namespace Gorf
 
 
         public int pShootingCounter = 0;
+        public int bSpeed = 12;
 
         public bool shooting = false;
 
@@ -43,22 +44,22 @@ namespace Gorf
         {
             if (direction == "left")
             {
-                pX = pX - 18;
+                pX = pX - bSpeed;
             }
 
             if (direction == "right")
             {
-                pX = pX + 18;
+                pX = pX + bSpeed;
             }
 
             if (direction == "up")
             {
-                pY = pY - 18;
+                pY = pY - bSpeed;
             }
 
             if (direction == "down")
             {
-                pY = pY + 18;
+                pY = pY + bSpeed;
             }
         }
     }
