@@ -46,6 +46,11 @@ namespace Gorf
             {
                 x = x + 2;
             }
+
+            if (direction == "stop")
+            {
+                x = x;
+            }
         }
         public void Hurt(string direction)
         {
@@ -77,6 +82,7 @@ namespace Gorf
         {
             y = y + 8;
         }
+
     }
 
 }

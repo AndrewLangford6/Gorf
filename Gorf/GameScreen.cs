@@ -22,6 +22,7 @@ namespace Gorf
 
         Gorf hero;
         Floor ground;
+        Boss boss;
 
         List<Bullet> bR = new List<Bullet>();
         List<Bullet> bL = new List<Bullet>();
@@ -38,7 +39,7 @@ namespace Gorf
         int heroX = ((720 / 2) - 12);
 
         bool facingR, mIsFacingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando;
+        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3;
 
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
@@ -54,10 +55,7 @@ namespace Gorf
 
             ground = new Floor(0, 380, 720, 70);
 
-            Minion test = new Minion(10, 380 - 36, 24, 36, 12, 0);
-            mList.Add(test);
-
-
+            boss = new Boss(Width / 2 - 155, -400, 310, 150);
 
             hp = 34;
 
@@ -68,9 +66,11 @@ namespace Gorf
             pShootingCounter = 0;
             pH = 4;
             pW = 48;
-            bulletDamage = 4;
+            bulletDamage = 3;
 
             facingR = true;
+
+            rando2 = 150;
 
 
         }
@@ -82,6 +82,93 @@ namespace Gorf
 
         public void gameLoop_Tick(object sender, EventArgs e)
         {
+            //boss
+            bossTime++;
+            bossTime3++;
+            LaserTime++;
+            if(boss.y + boss.sizeY <= 179)
+            {
+                boss.lower();
+            }
+            else
+            {
+
+            }
+
+            if(boss.x + boss.sizeX >= ground.x + ground.sizeX + 60)
+            {
+                bossTime2 = 0;
+                bossTime = 0;
+                bossTime2++;
+
+
+                if (bossTime2 >= 275)
+                {
+                    bossTime2 = 0;
+                    bossTime = 0;
+                }
+                else
+                {
+                    boss.Glide("left");
+
+                }
+            }
+            if(boss.x <= ground.x - 60)
+            {
+                bossTime2 = 0;
+                bossTime = 0;
+                bossTime2++;
+
+
+                if (bossTime2 >= 275)
+                {
+                    bossTime2 = 0;
+                    bossTime = 0;
+                }
+                else
+                {
+                        boss.Glide("right");
+                    
+                }
+            }
+
+            if (bossTime3 >= 200)
+            {
+                Rando3();
+                bossTime3 = 0;
+            }
+
+            if(bossTime >= 300)
+            {
+                bossTime2++;
+                
+
+                if (bossTime2 >= 150)
+                {
+                    bossTime2 = 0;
+                    bossTime = 0;
+                }
+                else
+                {
+                    
+                    if (rando3 == 1)
+                    {
+                        boss.Glide("left");
+                    }
+                    else
+                    {
+                        boss.Glide("right");
+                    }
+                }
+
+                
+            }
+
+            if (LaserTime >= 600)
+            {
+
+            }
+
             //hero movement
             Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
             gravityCounter++;
@@ -172,7 +259,10 @@ namespace Gorf
             {
                 Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
 
-
+                if (minionRect.IntersectsWith(minionRect))
+                {
+                    m.Chase("stop");
+                }
 
                 if (minionRect.IntersectsWith(gorf) && iFrames >= 20)
                 {
@@ -369,8 +459,9 @@ namespace Gorf
                 }
             }
 
-            if (eggTime > 300)
+            if (eggTime > rando2)
             {
+                rando2 = randGen.Next(100, 400);
                 rando = randGen.Next(ground.x, ground.x + ground.sizeX - 48);
                 Egg test2 = new Egg(rando, -100, 48, 72, 0);
                 eList.Add(test2);
@@ -381,6 +472,11 @@ namespace Gorf
             Refresh();
         }
 
+        public void Rando3()
+        {
+            rando3 = randGen.Next(1, 3);
+        }
+
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             Rectangle hpP = new Rectangle(hpX + 1, hpY + 1, hpL, 6);
@@ -388,11 +484,15 @@ namespace Gorf
 
             Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
 
+            Rectangle bossRect = new Rectangle(boss.x, boss.y, boss.sizeX, boss.sizeY);
+
             e.Graphics.FillRectangle(BrownBrush, ground.x, ground.y, ground.sizeX, ground.sizeY);
             e.Graphics.FillRectangle(whiteBrush, hero.x, hero.y, hero.sizeX, hero.sizeY);
 
             e.Graphics.FillRectangle(whiteBrush, hpB);
             e.Graphics.FillRectangle(greenBrush, hpP);
+
+            
 
             foreach (Minion m in mList)
             {
@@ -458,7 +558,7 @@ namespace Gorf
                 Rectangle eggo = new Rectangle(eg.x, eg.y, eg.sizeX, eg.sizeY);
                 e.Graphics.FillRectangle(greenBrush, eggo);
             }
-
+            e.Graphics.FillRectangle(BrownBrush, bossRect);
         }
 
         private void Moving(string direction)
@@ -466,6 +566,8 @@ namespace Gorf
             if (direction == "right")
             {
                 ground.Move("left");
+
+                boss.Move("left");
 
                 //minions
                 foreach (Minion m in mList)
@@ -494,6 +596,7 @@ namespace Gorf
             {
                 ground.Move("right");
 
+                boss.Move("right");
 
                 //minions
                 foreach (Minion m in mList)

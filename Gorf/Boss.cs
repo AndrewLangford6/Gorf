@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace Gorf
 {
-    class Egg
+    class Boss
     {
-        public int x, y, sizeX, sizeY, t;
-        Random randGenEgg = new Random();
-        int randoEgg;
-        public Egg(int _x, int _y, int _sizeX, int _sizeY, int _t)
+
+        Random randGenBoss = new Random();
+        int rBoss;
+
+        public int x, y, sizeX, sizeY;
+
+        public Boss(int _x, int _y, int _sizeX, int _sizeY)
         {
             x = _x;
             y = _y;
             sizeX = _sizeX;
             sizeY = _sizeY;
-            t = _t;
 
         }
         public void Move(string direction)
@@ -31,12 +33,30 @@ namespace Gorf
             {
                 x = x - 5;
             }
+
         }
-        public void Passive()
+
+        public void lower()
         {
-            randoEgg = randGenEgg.Next(15, 30);
             y = y + 2;
         }
-    }
 
+        public void Glide(string direction)
+        {
+            if (direction == "left")
+            {
+                x = x - 3;
+            }
+
+            if (direction == "right")
+            {
+                x = x + 3;
+            }
+        }
+
+        public void Laser()
+        {
+
+        }
+    }
 }
