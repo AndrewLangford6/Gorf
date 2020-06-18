@@ -79,6 +79,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -92,6 +93,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\namsa_is_great.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\nasa_bb %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mmon %281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mmon.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spacewalk_planet_surface.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
