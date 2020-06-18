@@ -39,7 +39,7 @@ namespace Gorf
         int heroX = ((720 / 2) - 12);
 
         bool facingR, mIsFacingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5;
+        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5, gorfSprite, walkCounterR, walkCounterL;
 
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
@@ -58,6 +58,7 @@ namespace Gorf
             boss = new Boss(Width / 2 - 155, -400, 310, 150, 5000);
 
             hp = 34;
+            gorfSprite = 5;
 
             jumpSpeed = 0;
             gravity = -18;
@@ -216,24 +217,59 @@ namespace Gorf
             }
             hero.Passive();
 
+             
+            
+
+            walkCounterR++;
             if (leftArrowDown)
             {
                 Moving("right");
+
+                if (walkCounterR > 3)
+                {
+                    gorfSprite = 3;
+                }
+                else
+                {
+                    gorfSprite = 4;
+                }
+
+                if (walkCounterR > 6)
+                {
+                    walkCounterR = 0;
+                }
             }
 
+            walkCounterL++;
             if (rightArrowDown)
             {
                 Moving("left");
+                if (walkCounterL > 3)
+                {
+                    gorfSprite = 1;
+                }
+                else 
+                {
+                    gorfSprite = 2;
+                }
+
+                if (walkCounterL > 6)
+                {
+                    walkCounterL = 0;
+                }
             }
+
+            
 
             if (sDown)
             {
                 hero.Jump();
+                
             }
 
             if (upArrowDown)
             {
-
+                gorfSprite = 6;
             }
 
             if (downArrowDown)
@@ -242,6 +278,7 @@ namespace Gorf
                 {
                     bullet.Move("down");
                 }
+                gorfSprite = 5;
             }
 
             //minions
@@ -436,17 +473,17 @@ namespace Gorf
                     //right
                     if (facingR == true)
                     {
-                        Bullet b1 = new Bullet(hero.x + hero.sizeX + 6, hero.y + 10, pH, pW);
+                        Bullet b1 = new Bullet(hero.x + hero.sizeX + 6, hero.y + 8, pH, pW);
                         //up
                         if (upArrowDown)
                         {
-                            Bullet b3 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2), hero.y - hero.sizeY - 6, pW, pH);
+                            Bullet b3 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y - hero.sizeY - 12, pW, pH);
                             bUp.Add(b3);
                         }
                         //down
                         else if (downArrowDown)
                         {
-                            Bullet b4 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2), hero.y + hero.sizeY + 6, pW, pH);
+                            Bullet b4 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y + hero.sizeY - 6, pW, pH);
                             bDown.Add(b4);
                         }
                         else
@@ -458,17 +495,17 @@ namespace Gorf
                     //left
                     if (facingR == false)
                     {
-                        Bullet b2 = new Bullet(hero.x - 6 - pW, hero.y + 10, pH, pW);
+                        Bullet b2 = new Bullet(hero.x - 6 - pW, hero.y + 8, pH, pW);
                         //up
                         if (upArrowDown)
                         {
-                            Bullet b3 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2), hero.y - hero.sizeY - 6, pW, pH);
+                            Bullet b3 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y - hero.sizeY - 12, pW, pH);
                             bUp.Add(b3);
                         }
                         //down
                         else if (downArrowDown)
                         {
-                            Bullet b4 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2), hero.y + hero.sizeY + 6, pW, pH);
+                            Bullet b4 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y + hero.sizeY - 6, pW, pH);
                             bDown.Add(b4);
                         }
                         else
@@ -528,22 +565,59 @@ namespace Gorf
             rando3 = randGen.Next(1, 3);
         }
 
+        public void Sprites(object sender, PaintEventArgs e)
+        {
+            
+        }
+
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            Rectangle hpP = new Rectangle(hpX + 1, hpY + 1, hpL, 6);
-            Rectangle hpB = new Rectangle(hpX, hpY, 36, 8);
+            Rectangle gorf = new Rectangle(hero.x - 18, hero.y - 18, hero.sizeX + 18, hero.sizeY + 18);
+            
 
-            Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
+            Rectangle hpP = new Rectangle(hpX -8, hpY - 17, hpL, 6);
+            Rectangle hpB = new Rectangle(hpX-9, hpY - 18, 36, 8);
+
+            
 
             Rectangle bossRect = new Rectangle(boss.x, boss.y, boss.sizeX, boss.sizeY);
 
             e.Graphics.FillRectangle(BrownBrush, ground.x, ground.y, ground.sizeX, ground.sizeY);
-            e.Graphics.FillRectangle(whiteBrush, hero.x, hero.y, hero.sizeX, hero.sizeY);
+            //e.Graphics.FillRectangle(whiteBrush, hero.x, hero.y, hero.sizeX, hero.sizeY);
+            
 
             e.Graphics.FillRectangle(whiteBrush, hpB);
             e.Graphics.FillRectangle(greenBrush, hpP);
 
-            
+            //SPRITES
+            if (gorfSprite == 1)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Gorf_Walk_R1, gorf);
+            }
+            else if (gorfSprite == 2)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Gorf_Walk_R3, gorf);
+            }
+            else if (gorfSprite == 3)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Gorf_Walk_L1, gorf);
+            }
+            else if (gorfSprite == 4)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Gorf_Walk_L3, gorf);
+            }
+            else if (gorfSprite == 5)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Gorf_Down, gorf);
+            }
+            else if (gorfSprite == 6)
+            {
+                e.Graphics.DrawImage(Properties.Resources.Gorf_Up, gorf);
+            }
+
+
+            //
+
 
             foreach (Minion m in mList)
             {

@@ -110,5 +110,38 @@
   <ItemGroup>
     <None Include="Resources\spacewalk_planet_surface.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_test.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_R1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_R1_good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_L2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_R2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_L1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_L3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_R1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Walk_R3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gorf_Up.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -63,9 +63,59 @@ namespace Gorf.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap mmon {
+        internal static System.Drawing.Bitmap Gorf_Down {
             get {
-                object obj = ResourceManager.GetObject("mmon", resourceCulture);
+                object obj = ResourceManager.GetObject("Gorf_Down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gorf_Up {
+            get {
+                object obj = ResourceManager.GetObject("Gorf_Up", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gorf_Walk_L1 {
+            get {
+                object obj = ResourceManager.GetObject("Gorf_Walk_L1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gorf_Walk_L3 {
+            get {
+                object obj = ResourceManager.GetObject("Gorf_Walk_L3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gorf_Walk_R1 {
+            get {
+                object obj = ResourceManager.GetObject("Gorf_Walk_R1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Gorf_Walk_R3 {
+            get {
+                object obj = ResourceManager.GetObject("Gorf_Walk_R3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
