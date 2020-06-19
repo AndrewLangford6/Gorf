@@ -63,6 +63,7 @@
       <DependentUpon>GameScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Gorf.cs" />
+    <Compile Include="HighScore.cs" />
     <Compile Include="MenuScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
