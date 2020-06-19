@@ -43,6 +43,7 @@
             // 
             this.winLoseLabel.AutoSize = true;
             this.winLoseLabel.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.winLoseLabel.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.winLoseLabel.Location = new System.Drawing.Point(310, 190);
             this.winLoseLabel.Name = "winLoseLabel";
             this.winLoseLabel.Size = new System.Drawing.Size(68, 29);
@@ -54,6 +55,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.BackgroundImage = global::Gorf.Properties.Resources.spacewalk_planet_surface;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Controls.Add(this.winLoseLabel);
             this.DoubleBuffered = true;
