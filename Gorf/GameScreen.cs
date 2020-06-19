@@ -18,10 +18,10 @@ namespace Gorf
         Random randGen = new Random();
 
         
-        SoundPlayer chargePlayer = new SoundPlayer(Properties.Resources.Power_Up_Ray_Mike_Koenig_800933783);
+        SoundPlayer chargePlayer = new SoundPlayer(Properties.Resources.CHARGE);
         SoundPlayer startP = new SoundPlayer(Properties.Resources.iMac_Startup_Chime_Carlo__1849294605);
 
-        SoundPlayer bossLaserPlayer = new SoundPlayer(Properties.Resources.Laser_Blasts_SoundBible_com_108608437);
+        SoundPlayer bossLaserPlayer = new SoundPlayer(Properties.Resources.BLAST);
 
         //used to draw boxes on screen
         SolidBrush whiteBrush = new SolidBrush(Color.White);

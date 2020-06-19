@@ -101,6 +101,15 @@ namespace Gorf.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream BLAST {
+            get {
+                return ResourceManager.GetStream("BLAST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap boss {
@@ -127,6 +136,15 @@ namespace Gorf.Properties {
             get {
                 object obj = ResourceManager.GetObject("boss_ded2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream CHARGE {
+            get {
+                return ResourceManager.GetStream("CHARGE", resourceCulture);
             }
         }
         
@@ -222,15 +240,6 @@ namespace Gorf.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Laser_Blasts_SoundBible_com_108608437 {
-            get {
-                return ResourceManager.GetStream("Laser_Blasts_SoundBible_com_108608437", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
         internal static System.IO.UnmanagedMemoryStream Laser_SoundBible_com_602495617 {
             get {
                 return ResourceManager.GetStream("Laser_SoundBible_com_602495617", resourceCulture);
@@ -253,15 +262,6 @@ namespace Gorf.Properties {
         internal static System.IO.UnmanagedMemoryStream Pain_SoundBible_com_1883168362 {
             get {
                 return ResourceManager.GetStream("Pain_SoundBible_com_1883168362", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream Power_Up_Ray_Mike_Koenig_800933783 {
-            get {
-                return ResourceManager.GetStream("Power_Up_Ray_Mike_Koenig_800933783", resourceCulture);
             }
         }
         
