@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Gorf
 {
@@ -34,7 +35,7 @@ namespace Gorf
 
         List<Egg> eList = new List<Egg>();
 
-        public static int gravity, gravityCounter, iFrames, hp, mHP;
+        public static int gravity, gravityCounter, iFrames, hp, mHP, score;
         public static int jumpSpeed;
 
         int heroX = ((720 / 2) - 12);
@@ -52,6 +53,8 @@ namespace Gorf
 
         public void OnStart()
         {
+            rightArrowDown = leftArrowDown = sDown = xDown = downArrowDown = upArrowDown = false;
+            winLoseLabel.Visible = false;
             hero = new Gorf(heroX, 100, 24, 36);
 
             ground = new Floor(0, 380, 720, 70);
@@ -60,6 +63,7 @@ namespace Gorf
 
             hp = 34;
             gorfSprite = 5;
+            score = 0;
 
             jumpSpeed = 0;
             gravity = -18;
@@ -75,6 +79,14 @@ namespace Gorf
             rando2 = 150;
         }
 
+        public void GameOver()
+        {
+            gameLoop.Stop();
+            winLoseLabel.Text = "Game Over!\n Score: " + score + "\n Press Escape to Continue";
+            winLoseLabel.Visible = true;
+            
+
+        }
         private void GameScreen_Load(object sender, EventArgs e)
         {
 
@@ -82,7 +94,7 @@ namespace Gorf
 
         public void gameLoop_Tick(object sender, EventArgs e)
         {
-            
+            score++;
             Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
             Rectangle bossRect = new Rectangle(boss.x, boss.y - 60, boss.sizeX, boss.sizeY);
             //boss
@@ -198,7 +210,12 @@ namespace Gorf
             }
 
             //hero movement
-            
+            if(hp <= 0 || hero.y + hero.sizeY>= Height)
+            {
+                GameOver();
+                Form1.ChangeScreen(this, "ScoreScreen");
+            }
+
             gravityCounter++;
             iFrames++;
             eggTime++;

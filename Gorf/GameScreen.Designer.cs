@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gameLoop = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
+            this.winLoseLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameLoop
@@ -39,14 +39,15 @@
             this.gameLoop.Interval = 8;
             this.gameLoop.Tick += new System.EventHandler(this.gameLoop_Tick);
             // 
-            // label1
+            // winLoseLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 215);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.winLoseLabel.AutoSize = true;
+            this.winLoseLabel.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.winLoseLabel.Location = new System.Drawing.Point(282, 176);
+            this.winLoseLabel.Name = "winLoseLabel";
+            this.winLoseLabel.Size = new System.Drawing.Size(68, 29);
+            this.winLoseLabel.TabIndex = 0;
+            this.winLoseLabel.Text = "label1";
             // 
             // GameScreen
             // 
@@ -54,7 +55,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.winLoseLabel);
             this.DoubleBuffered = true;
             this.Name = "GameScreen";
             this.Size = new System.Drawing.Size(720, 480);
@@ -70,6 +71,6 @@
         #endregion
 
         private System.Windows.Forms.Timer gameLoop;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label winLoseLabel;
     }
 }
