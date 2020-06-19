@@ -19,6 +19,7 @@ namespace Gorf
 
         
         SoundPlayer chargePlayer = new SoundPlayer(Properties.Resources.Power_Up_Ray_Mike_Koenig_800933783);
+        SoundPlayer startP = new SoundPlayer(Properties.Resources.iMac_Startup_Chime_Carlo__1849294605);
 
         SoundPlayer bossLaserPlayer = new SoundPlayer(Properties.Resources.Laser_Blasts_SoundBible_com_108608437);
 
@@ -62,7 +63,7 @@ namespace Gorf
 
         public void OnStart()
         {
-            Form1.GamePlayer();
+            startP.Play();
             rightArrowDown = leftArrowDown = sDown = xDown = downArrowDown = upArrowDown = false;
             winLoseLabel.Visible = false;
             hero = new Gorf(heroX, 100, 24, 36);
@@ -97,7 +98,6 @@ namespace Gorf
             
             Thread.Sleep(3000);
             gameLoop.Stop();
-            gamePlayer.Stop();
 
             
 
@@ -113,7 +113,6 @@ namespace Gorf
             Thread.Sleep(3000);
 
             gameLoop.Stop();
-            gamePlayer.Stop();
 
             Form1.ChangeScreen(this, "ScoreScreen");
 
