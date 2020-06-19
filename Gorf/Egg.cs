@@ -8,16 +8,17 @@ namespace Gorf
 {
     class Egg
     {
-        public int x, y, sizeX, sizeY, t;
+        public int x, y, sizeX, sizeY, t, sprite;
         Random randGenEgg = new Random();
         int randoEgg;
-        public Egg(int _x, int _y, int _sizeX, int _sizeY, int _t)
+        public Egg(int _x, int _y, int _sizeX, int _sizeY, int _t, int _sprite)
         {
             x = _x;
             y = _y;
             sizeX = _sizeX;
             sizeY = _sizeY;
             t = _t;
+            sprite = _sprite;
 
         }
         public void Move(string direction)

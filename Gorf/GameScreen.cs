@@ -19,6 +19,7 @@ namespace Gorf
         SolidBrush whiteBrush = new SolidBrush(Color.White);
         SolidBrush BrownBrush = new SolidBrush(Color.Brown);
         SolidBrush greenBrush = new SolidBrush(Color.Green);
+        SolidBrush pinkBrush = new SolidBrush(Color.Pink);
 
         Gorf hero;
         Floor ground;
@@ -39,7 +40,7 @@ namespace Gorf
         int heroX = ((720 / 2) - 12);
 
         bool facingR, mIsFacingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5, gorfSprite, walkCounterR, walkCounterL;
+        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5, gorfSprite, walkCounterR, walkCounterL, mWalkingCR, mWalkingCL, mSprite;
 
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
@@ -55,7 +56,7 @@ namespace Gorf
 
             ground = new Floor(0, 380, 720, 70);
 
-            boss = new Boss(Width / 2 - 155, -400, 310, 150, 5000);
+            boss = new Boss(Width / 2 - 155, -400, 310, 90, 250);
 
             hp = 34;
             gorfSprite = 5;
@@ -83,7 +84,7 @@ namespace Gorf
         {
             
             Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
-            Rectangle bossRect = new Rectangle(boss.x, boss.y, boss.sizeX, boss.sizeY);
+            Rectangle bossRect = new Rectangle(boss.x, boss.y - 60, boss.sizeX, boss.sizeY);
             //boss
             bossTime++;
             bossTime3++;
@@ -279,7 +280,21 @@ namespace Gorf
                     bullet.Move("down");
                 }
                 gorfSprite = 5;
+                if (!downArrowDown)
+                {
+                    if (facingR)
+                    {
+                        gorfSprite = 1;
+                    }
+                    else
+                    {
+                        gorfSprite = 3;
+                    }
+                }
+
             }
+
+            
 
             //minions
             foreach (Minion m in mList)
@@ -342,6 +357,8 @@ namespace Gorf
 
                     iFrames = 0;
                 }
+
+
             }
 
             //minion and ground
@@ -439,6 +456,7 @@ namespace Gorf
                 if (b3.IntersectsWith(bossRect))
                 {
                     boss.hp = boss.hp - bulletDamage;
+                    bUp.Remove(bullet);
                 }
 
             }
@@ -533,11 +551,12 @@ namespace Gorf
                     {
                         p.t++;
                         p.y = 310;
+                        p.sprite = 2;
 
                         if (p.t > 25)
                         {
                             
-                            Minion eggMinion = new Minion(p.x + 12, p.y + 24, 24, 36, 12, 0);
+                            Minion eggMinion = new Minion(p.x + 12, p.y + 24, 24, 36, 12, 0, 1);
                             mList.Add(eggMinion);
 
                             eList.Remove(p);
@@ -551,7 +570,7 @@ namespace Gorf
             {
                 rando2 = randGen.Next(100, 400);
                 rando = randGen.Next(ground.x, ground.x + ground.sizeX - 48);
-                Egg test2 = new Egg(rando, -100, 48, 72, 0);
+                Egg test2 = new Egg(rando, -100, 48, 72, 0, 1);
                 eList.Add(test2);
 
                 eggTime = 0;
@@ -580,9 +599,9 @@ namespace Gorf
 
             
 
-            Rectangle bossRect = new Rectangle(boss.x, boss.y, boss.sizeX, boss.sizeY);
+            Rectangle bossRect = new Rectangle(boss.x, boss.y - 60, boss.sizeX, boss.sizeY + 60);
 
-            e.Graphics.FillRectangle(BrownBrush, ground.x, ground.y, ground.sizeX, ground.sizeY);
+            
             //e.Graphics.FillRectangle(whiteBrush, hero.x, hero.y, hero.sizeX, hero.sizeY);
             
 
@@ -616,13 +635,33 @@ namespace Gorf
             }
 
 
+            
+
             //
 
 
             foreach (Minion m in mList)
             {
-                Rectangle minionRect = new Rectangle(m.x, m.y, m.sizeX, m.sizeY);
-                e.Graphics.FillRectangle(BrownBrush, minionRect);
+                Rectangle minionRect = new Rectangle(m.x - 12, m.y -20, m.sizeX+24, m.sizeY+20);
+
+                //SPRITES
+                if (m.sprite == 1)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.Alien1, minionRect);
+                }
+                else if (m.sprite == 2)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.Alien2, minionRect);
+                }
+                else if (m.sprite == 3)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.AlienR1, minionRect);
+                }
+                else if (m.sprite == 4)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.AlienR2, minionRect);
+                }
+
             }
 
 
@@ -631,8 +670,8 @@ namespace Gorf
             {
 
 
-                Rectangle b1 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
-                e.Graphics.FillRectangle(whiteBrush, b1);
+                Rectangle b1 = new Rectangle(bullet.pX, bullet.pY-2, bullet.pW, bullet.pH - 3);
+                e.Graphics.FillRectangle(pinkBrush, b1);
 
                 if (bullet.pX > this.Width + 100)
                 {
@@ -644,8 +683,8 @@ namespace Gorf
             {
 
 
-                Rectangle b2 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
-                e.Graphics.FillRectangle(whiteBrush, b2);
+                Rectangle b2 = new Rectangle(bullet.pX, bullet.pY-2, bullet.pW, bullet.pH -3);
+                e.Graphics.FillRectangle(pinkBrush, b2);
 
                 if (bullet.pX < -100)
                 {
@@ -657,8 +696,8 @@ namespace Gorf
             {
 
 
-                Rectangle b3 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
-                e.Graphics.FillRectangle(whiteBrush, b3);
+                Rectangle b3 = new Rectangle(bullet.pX+1, bullet.pY, bullet.pW - 3, bullet.pH);
+                e.Graphics.FillRectangle(pinkBrush, b3);
 
                 if (bullet.pY < 0)
                 {
@@ -670,19 +709,31 @@ namespace Gorf
             {
 
 
-                Rectangle b4 = new Rectangle(bullet.pX, bullet.pY, bullet.pW, bullet.pH);
-                e.Graphics.FillRectangle(whiteBrush, b4);
+                Rectangle b4 = new Rectangle(bullet.pX + 1, bullet.pY, bullet.pW - 3, bullet.pH);
+                e.Graphics.FillRectangle(pinkBrush, b4);
 
                 if (bullet.pY > 500)
                 {
                     bDown.Remove(bullet);
                 }
             }
+
+
             foreach (Egg eg in eList.AsEnumerable().Reverse())
             {
-                Rectangle eggo = new Rectangle(eg.x, eg.y, eg.sizeX, eg.sizeY);
-                e.Graphics.FillRectangle(greenBrush, eggo);
+                Rectangle eggo = new Rectangle(eg.x - 20, eg.y - 20, eg.sizeX + 40, eg.sizeY + 50);
+                if (eg.sprite == 1)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.Egg, eggo);
+                }
+                else
+                {
+                    e.Graphics.DrawImage(Properties.Resources.Egg_dead, eggo);
+                }
             }
+
+
+
             Rectangle laser = new Rectangle(boss.x + 124, boss.y + boss.sizeY - 20, 62, 700);
            
             if(LaserTime >= 600)
@@ -692,14 +743,14 @@ namespace Gorf
             
             if(boss.hp <= 0)
             {
-                e.Graphics.FillRectangle(whiteBrush, bossRect);
+                e.Graphics.DrawImage(Properties.Resources.boss, bossRect);
             }
             else
             {
-                e.Graphics.FillRectangle(BrownBrush, bossRect);
+                e.Graphics.DrawImage(Properties.Resources.boss, bossRect);
             }
-            
 
+            e.Graphics.FillRectangle(BrownBrush, ground.x, ground.y, ground.sizeX, ground.sizeY);
         }
 
         private void Moving(string direction)

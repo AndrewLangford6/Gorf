@@ -63,14 +63,29 @@
       <DependentUpon>GameScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Gorf.cs" />
+    <Compile Include="MenuScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MenuScreen.Designer.cs">
+      <DependentUpon>MenuScreen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Minion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreScreen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ScoreScreen.Designer.cs">
+      <DependentUpon>ScoreScreen.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GameScreen.resx">
       <DependentUpon>GameScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuScreen.resx">
+      <DependentUpon>MenuScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,6 +97,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ScoreScreen.resx">
+      <DependentUpon>ScoreScreen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -142,6 +160,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Gorf_Up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Alien1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Alien2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AlienR1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AlienR2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Egg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Egg_dead.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\boss.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
