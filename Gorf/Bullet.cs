@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Media;
 
 namespace Gorf
 {
@@ -10,6 +11,7 @@ namespace Gorf
     {
         public int pX, pY, pH, pW;
 
+        SoundPlayer gorfLaserPLayer = new SoundPlayer(Properties.Resources.Laser_SoundBible_com_602495617);
 
         public int pShootingCounter = 0;
         public int bSpeed = 12;
@@ -61,6 +63,11 @@ namespace Gorf
             {
                 pY = pY + bSpeed;
             }
+        }
+
+        public void Sound()
+        {
+            gorfLaserPLayer.Play();
         }
     }
 }

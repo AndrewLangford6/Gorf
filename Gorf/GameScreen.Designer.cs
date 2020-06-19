@@ -49,6 +49,7 @@
             this.winLoseLabel.Size = new System.Drawing.Size(68, 29);
             this.winLoseLabel.TabIndex = 0;
             this.winLoseLabel.Text = "label1";
+            this.winLoseLabel.Visible = false;
             // 
             // GameScreen
             // 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Media;
 
 namespace Gorf
 {
@@ -16,12 +17,15 @@ namespace Gorf
     {
 
         List<HighScore> highList = new List<HighScore>();
+        SoundPlayer music = new SoundPlayer(Properties.Resources.StardustMan);
 
         public ScoreScreen()
         {
             InitializeComponent();
 
             string newHigh, newNum;
+
+            music.Play();
 
             XmlReader reader = XmlReader.Create("NewFolder/XMLFileHighScores.xml");
 

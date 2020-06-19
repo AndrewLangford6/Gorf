@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using System.Media;
 
 namespace Gorf
 {
     class Gorf
     {
         public SolidBrush gorfBrush;
+        SoundPlayer painPlayer = new SoundPlayer(Properties.Resources.Pain_SoundBible_com_1883168362);
         public int x, y, sizeX, sizeY;
 
         public Gorf(int _x, int _y, int _sizeX, int _sizeY)
@@ -73,9 +75,13 @@ namespace Gorf
 
         public void Hurt()
         {
+            painPlayer.Play();
             GameScreen.hp = GameScreen.hp - 2;
         }
 
+        
+           
+        
 
 
     }

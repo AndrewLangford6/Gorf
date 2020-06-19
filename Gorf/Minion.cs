@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Media;
 using System.Threading.Tasks;
 
 namespace Gorf
 {
     class Minion
     {
+        
         public int x, y, sizeX, sizeY, hp2, mIFrames, sprite;
         int scale = 5;
         int timerR = 0;
@@ -37,6 +39,8 @@ namespace Gorf
             }
 
         }
+
+        
 
         public void Chase(string direction)
         {

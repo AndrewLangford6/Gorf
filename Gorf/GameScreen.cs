@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace Gorf
 {
@@ -15,6 +16,11 @@ namespace Gorf
     {
         // create a random number generator
         Random randGen = new Random();
+
+        
+        SoundPlayer chargePlayer = new SoundPlayer(Properties.Resources.Power_Up_Ray_Mike_Koenig_800933783);
+
+        SoundPlayer bossLaserPlayer = new SoundPlayer(Properties.Resources.Laser_Blasts_SoundBible_com_108608437);
 
         //used to draw boxes on screen
         SolidBrush whiteBrush = new SolidBrush(Color.White);
@@ -56,6 +62,7 @@ namespace Gorf
 
         public void OnStart()
         {
+            Form1.GamePlayer();
             rightArrowDown = leftArrowDown = sDown = xDown = downArrowDown = upArrowDown = false;
             winLoseLabel.Visible = false;
             hero = new Gorf(heroX, 100, 24, 36);
@@ -90,6 +97,7 @@ namespace Gorf
             
             Thread.Sleep(3000);
             gameLoop.Stop();
+            gamePlayer.Stop();
 
             
 
@@ -105,6 +113,7 @@ namespace Gorf
             Thread.Sleep(3000);
 
             gameLoop.Stop();
+            gamePlayer.Stop();
 
             Form1.ChangeScreen(this, "ScoreScreen");
 
@@ -211,8 +220,13 @@ namespace Gorf
                 
             }
 
+            if(LaserTime >= 450)
+            {
+                chargePlayer.Play();
+            }
             if (LaserTime >= 600)
             {
+                bossLaserPlayer.Play();
                 bossTime4++;
                 
 
@@ -221,6 +235,7 @@ namespace Gorf
                     
                     bossTime4 = 0;
                     LaserTime = 0;
+                    bossLaserPlayer.Stop();
                 }
                 else
                 {
@@ -536,6 +551,7 @@ namespace Gorf
             {
                 if (pShootingCounter > 20)
                 {
+                    
                     //right
                     if (facingR == true)
                     {
@@ -544,16 +560,19 @@ namespace Gorf
                         if (upArrowDown)
                         {
                             Bullet b3 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y - hero.sizeY - 12, pW, pH);
+                            b3.Sound();
                             bUp.Add(b3);
                         }
                         //down
                         else if (downArrowDown)
                         {
                             Bullet b4 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y + hero.sizeY - 6, pW, pH);
+                            b4.Sound();
                             bDown.Add(b4);
                         }
                         else
                         {
+                            b1.Sound();
                             bR.Add(b1);
                         }
 
@@ -566,16 +585,19 @@ namespace Gorf
                         if (upArrowDown)
                         {
                             Bullet b3 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y - hero.sizeY - 12, pW, pH);
+                            b3.Sound();
                             bUp.Add(b3);
                         }
                         //down
                         else if (downArrowDown)
                         {
                             Bullet b4 = new Bullet(hero.x + (hero.sizeX / 2) - (pH / 2) - 9, hero.y + hero.sizeY - 6, pW, pH);
+                            b4.Sound();
                             bDown.Add(b4);
                         }
                         else
                         {
+                            b2.Sound();
                             bL.Add(b2);
                         }
 

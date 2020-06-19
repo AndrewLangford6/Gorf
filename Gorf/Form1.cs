@@ -7,15 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Gorf
 {
+    
     public partial class Form1 : Form
     {
         public Form1()
         {
             InitializeComponent();
             Cursor.Hide();
+            
 
             // open the main menu for the game
             MenuScreen ms = new MenuScreen();
@@ -26,6 +29,11 @@ namespace Gorf
         {
 
 
+        }
+
+        public static void GamePlayer()
+        {
+            
         }
 
         public static void ChangeScreen(UserControl current, string next)

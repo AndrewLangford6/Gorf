@@ -73,6 +73,11 @@
     <Compile Include="Minion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ScoreScreen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -90,14 +95,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="ScoreScreen.resx">
       <DependentUpon>ScoreScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -191,6 +191,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\boss_ded2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Golden Sins %28online-audio-converter.com%29.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\iMac_Startup_Chime-Carlo_-1849294605.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Laser Blasts-SoundBible.com-108608437.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Laser-SoundBible.com-602495617.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pain-SoundBible.com-1883168362.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Power_Up_Ray-Mike_Koenig-800933783.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\StardustMan.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
