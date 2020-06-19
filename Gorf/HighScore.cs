@@ -8,10 +8,9 @@ namespace Gorf
 {
     class HighScore
     {
-        public string name;
-        public int score;
+        public string name, score;
 
-        public HighScore(string _name, int _score)
+        public HighScore(string _name, string _score)
         {
             name = _name;
             score = _score;

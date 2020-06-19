@@ -113,6 +113,26 @@ namespace Gorf.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boss_ded1 {
+            get {
+                object obj = ResourceManager.GetObject("boss_ded1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap boss_ded2 {
+            get {
+                object obj = ResourceManager.GetObject("boss_ded2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Egg {
             get {
                 object obj = ResourceManager.GetObject("Egg", resourceCulture);
@@ -186,6 +206,16 @@ namespace Gorf.Properties {
         internal static System.Drawing.Bitmap Gorf_Walk_R3 {
             get {
                 object obj = ResourceManager.GetObject("Gorf_Walk_R3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap New_Piskel_1 {
+            get {
+                object obj = ResourceManager.GetObject("New_Piskel_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -43,7 +43,7 @@
             // 
             this.winLoseLabel.AutoSize = true;
             this.winLoseLabel.Font = new System.Drawing.Font("Comic Sans MS", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.winLoseLabel.Location = new System.Drawing.Point(282, 176);
+            this.winLoseLabel.Location = new System.Drawing.Point(310, 190);
             this.winLoseLabel.Name = "winLoseLabel";
             this.winLoseLabel.Size = new System.Drawing.Size(68, 29);
             this.winLoseLabel.TabIndex = 0;

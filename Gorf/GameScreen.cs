@@ -38,11 +38,14 @@ namespace Gorf
         public static int gravity, gravityCounter, iFrames, hp, mHP, score;
         public static int jumpSpeed;
 
+        public static string scoreInt;
+
         int heroX = ((720 / 2) - 12);
 
         bool facingR, mIsFacingR;
-        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5, gorfSprite, walkCounterR, walkCounterL, mWalkingCR, mWalkingCL, mSprite;
-
+        int pShootingCounter, pH, pW, hpX, hpY, hpL, bulletDamage, eggTime, rando, rando2, bossTime, bHPFInal, LaserTime, rando3, bossTime2, bossTime3, bossTime4, bossTime5, bossExT, gorfSprite, walkCounterR, walkCounterL, mWalkingCR, mWalkingCL, mSprite;
+        float bHPPP;
+        double bHPPPROUND;
 
         Boolean leftArrowDown, rightArrowDown, upArrowDown, downArrowDown, sDown, xDown;
         public GameScreen()
@@ -78,13 +81,33 @@ namespace Gorf
 
             rando2 = 150;
         }
-
-        public void GameOver()
+        public void Win()
         {
             gameLoop.Stop();
-            winLoseLabel.Text = "Game Over!\n Score: " + score + "\n Press Escape to Continue";
+            scoreInt = Convert.ToString(score);
             winLoseLabel.Visible = true;
+            winLoseLabel.Text = "YOU WIN!\n Score: " + score;
             
+            Thread.Sleep(3000);
+            gameLoop.Stop();
+
+            
+
+            Form1.ChangeScreen(this, "ScoreScreen");
+        }
+        public void GameOver()
+        {
+            
+            scoreInt = Convert.ToString(score);
+            winLoseLabel.Visible = true;
+            winLoseLabel.Text = "Game Over!\n Score: " + score;
+            
+            Thread.Sleep(3000);
+
+            gameLoop.Stop();
+
+            Form1.ChangeScreen(this, "ScoreScreen");
+
 
         }
         private void GameScreen_Load(object sender, EventArgs e)
@@ -95,13 +118,21 @@ namespace Gorf
         public void gameLoop_Tick(object sender, EventArgs e)
         {
             score++;
-            Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
+
+            if (boss.hp <= 0)
+            {
+                Win();
+            }
+                Rectangle gorf = new Rectangle(hero.x, hero.y, hero.sizeX, hero.sizeY);
             Rectangle bossRect = new Rectangle(boss.x, boss.y - 60, boss.sizeX, boss.sizeY);
             //boss
             bossTime++;
             bossTime3++;
-            
+            bossExT++;
             LaserTime++;
+            bHPPP = boss.hp * (496)/250 * 2;
+            bHPPPROUND = Math.Round(bHPPP);
+            bHPFInal = Convert.ToInt32(bHPPPROUND);
             if(boss.y + boss.sizeY <= 179)
             {
                 boss.lower();
@@ -213,7 +244,7 @@ namespace Gorf
             if(hp <= 0 || hero.y + hero.sizeY>= Height)
             {
                 GameOver();
-                Form1.ChangeScreen(this, "ScoreScreen");
+               
             }
 
             gravityCounter++;
@@ -614,7 +645,10 @@ namespace Gorf
             Rectangle hpP = new Rectangle(hpX -8, hpY - 17, hpL, 6);
             Rectangle hpB = new Rectangle(hpX-9, hpY - 18, 36, 8);
 
-            
+            Rectangle bHPB = new Rectangle(112, 420, 498, 18);
+            Rectangle bHPP = new Rectangle(113, 421, bHPFInal/2, 17);
+
+
 
             Rectangle bossRect = new Rectangle(boss.x, boss.y - 60, boss.sizeX, boss.sizeY + 60);
 
@@ -624,6 +658,8 @@ namespace Gorf
 
             e.Graphics.FillRectangle(whiteBrush, hpB);
             e.Graphics.FillRectangle(greenBrush, hpP);
+
+            
 
             //SPRITES
             if (gorfSprite == 1)
@@ -755,19 +791,36 @@ namespace Gorf
            
             if(LaserTime >= 600)
             {
-                e.Graphics.FillRectangle(BrownBrush, laser);
+                e.Graphics.FillRectangle(pinkBrush, laser);
             }
             
-            if(boss.hp <= 0)
+            if(boss.hp > 0)
             {
                 e.Graphics.DrawImage(Properties.Resources.boss, bossRect);
             }
             else
             {
-                e.Graphics.DrawImage(Properties.Resources.boss, bossRect);
+                if (bossExT > 5)
+                {
+                    e.Graphics.DrawImage(Properties.Resources.boss_ded1, bossRect);
+                }
+                else
+                {
+                    e.Graphics.DrawImage(Properties.Resources.boss_ded2, bossRect);
+                }
+
+                if (bossExT > 10)
+                {
+                    bossExT = 0;
+                }
+                
+                
             }
 
             e.Graphics.FillRectangle(BrownBrush, ground.x, ground.y, ground.sizeX, ground.sizeY);
+
+            e.Graphics.FillRectangle(whiteBrush, bHPB);
+            e.Graphics.FillRectangle(greenBrush, bHPP);
         }
 
         private void Moving(string direction)
